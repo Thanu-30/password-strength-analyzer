@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Password Strength Analyzer</title>
+
+<style>
+body{
+    font-family:Arial,sans-serif;
+    background:#f0f2f5;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    margin:0;
+}
+
+.container{
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 0 15px rgba(0,0,0,0.2);
+    width:320px;
+    text-align:center;
+}
+
+h2{
+    color:#007BFF;
+}
+
+input{
+    width:90%;
+    padding:10px;
+    margin:15px 0;
+    font-size:16px;
+}
+
+button{
+    background:#007BFF;
+    color:white;
+    border:none;
+    padding:10px 20px;
+    border-radius:5px;
+    cursor:pointer;
+    font-size:16px;
+}
+
+button:hover{
+    background:#0056b3;
+}
+
+#result{
+    font-size:20px;
+    font-weight:bold;
+    margin-top:15px;
+}
+
+#suggestion{
+    color:#555;
+    text-align:left;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<h2>Password Strength Analyzer</h2>
+
+<input type="password" id="password" placeholder="Enter Password">
+
+<br>
+
+<button onclick="checkPassword()">Check Strength</button>
+
+<p id="result"></p>
+
+<p id="suggestion"></p>
+
+</div>
+
+<script>
+
+function checkPassword(){
+
+let password=document.getElementById("password").value;
+
+let score=0;
+let suggestions=[];
+
+if(password.length>=8)
+score++;
+else
+suggestions.push("• Use at least 8 characters");
+
+if(/[A-Z]/.test(password))
+score++;
+else
+suggestions.push("• Add an uppercase letter");
+
+if(/[a-z]/.test(password))
+score++;
+else
+suggestions.push("• Add a lowercase letter");
+
+if(/[0-9]/.test(password))
+score++;
+else
+suggestions.push("• Add a number");
+
+if(/[!@#$%^&*(),.?\":{}|<>]/.test(password))
+score++;
+else
+suggestions.push("• Add a special character");
+
+let result=document.getElementById("result");
+
+if(score<=2){
+result.innerHTML="🔴 Weak Password";
+result.style.color="red";
+}
+else if(score<=4){
+result.innerHTML="🟡 Medium Password";
+result.style.color="orange";
+}
+else{
+result.innerHTML="🟢 Strong Password";
+result.style.color="green";
+}
+
+if(suggestions.length>0){
+document.getElementById("suggestion").innerHTML="<b>Suggestions:</b><br>"+suggestions.join("<br>");
+}
+else{
+document.getElementById("suggestion").innerHTML="<b>Excellent! Your password is very strong.</b>";
+}
+
+}
+
+</script>
+
+</body>
+</html>
